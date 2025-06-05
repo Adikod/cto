@@ -25,6 +25,7 @@ public class RequestService {
                 .description(description)
                 .status(RequestStatus.CREATED)
                 .build();
+        log.info("Creating request for client={} car={}", clientName, carModel);
 
         return repository.save(request);
     }
@@ -51,6 +52,8 @@ public class RequestService {
         if (newStatus == RequestStatus.COMPLETED) {
             log.info("[TIPA SMS] Notify client {}: Your request is completed.", request.getClientName());
         }
+        log.info("Changing status to {} by {} with reason: {}", newStatus, changedBy, reason);
+
 
         return repository.save(request);
     }
