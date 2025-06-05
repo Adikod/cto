@@ -1,7 +1,8 @@
 package com.example.cto.controller;
 
 import com.example.cto.domain.*;
-import com.example.cto.dto.*;
+import com.example.cto.dto.ChangeStatusDTO;
+import com.example.cto.dto.CreateRequestDTO;
 import com.example.cto.service.RequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -31,10 +32,11 @@ public class RequestController {
 
     // update request status
     @PostMapping("/{id}/status")
-    public ResponseEntity<ServiceRequest> changeStatus(@PathVariable Long id, @RequestBody @Valid ChangeStatusDTO dto) {
-        ServiceRequest updated = requestService.changeStatus(id, dto.newStatus(), dto.changedBy(), dto.reason());
-        return ResponseEntity.ok(updated);
+    public ResponseEntity<Void> changeStatusKafka(@PathVariable Long id, @RequestBody @Valid ChangeStatusDTO dto) {
+        requestService.sendStatusChangeKafka(id, dto.newStatus(), dto.changedBy(), dto.reason());
+        return ResponseEntity.accepted().build();
     }
+
 
     // gets requests by client name
     @GetMapping("/by-client")

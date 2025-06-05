@@ -1,6 +1,8 @@
 package com.example.cto.service;
 
 import com.example.cto.domain.*;
+import com.example.cto.kafka.StatusChangeEvent;
+import com.example.cto.kafka.StatusKafkaProducer;
 import com.example.cto.repository.ServiceRequestRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,11 @@ import java.util.List;
 public class RequestService {
 
     private final ServiceRequestRepository repository;
+    private final StatusKafkaProducer kafkaProducer;
+
+    public void sendStatusChangeKafka(Long id, RequestStatus status, String by, String reason) {
+        kafkaProducer.sendStatusChange(new StatusChangeEvent(id, status, by, reason));
+    }
 
     // create a new service request
     public ServiceRequest createRequest(String clientName, String carModel, String description) {
