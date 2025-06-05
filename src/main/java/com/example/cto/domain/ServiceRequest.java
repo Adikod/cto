@@ -1,12 +1,18 @@
 package com.example.cto.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.*;
 
+@Builder
 @Data //auto gen of setter getters...
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class ServiceRequest {
 
     @Id

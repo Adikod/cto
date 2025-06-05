@@ -1,13 +1,19 @@
 package com.example.cto.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 // single status change in a request
+@Builder
 @Data //auto gen of setter getters...
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class StatusHistory {
 
     @Id
