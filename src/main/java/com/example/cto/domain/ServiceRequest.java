@@ -33,7 +33,9 @@ public class ServiceRequest {
     private RequestStatus status;
 
     // history of status change
-    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<StatusHistory> history = new ArrayList<>();
+
 
 }
