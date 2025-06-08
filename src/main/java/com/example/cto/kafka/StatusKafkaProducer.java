@@ -13,7 +13,7 @@ public class StatusKafkaProducer {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    private static final String TOPIC = "statusСhange";
+    private static final String TOPIC = "statusChange";
 
     public void sendStatusChange(StatusChangeEvent event) {
         try {

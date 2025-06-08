@@ -10,6 +10,6 @@ public class CtoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CtoApplication.class, args);
-        log.info("СТО service stared");
+        log.info("CTO service stared");
     }
 }

@@ -4,6 +4,7 @@ import com.example.cto.domain.*;
 import com.example.cto.kafka.StatusChangeEvent;
 import com.example.cto.kafka.StatusKafkaProducer;
 import com.example.cto.repository.ServiceRequestRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,21 +39,23 @@ public class RequestService {
     }
 
     // update request status
-    public ServiceRequest changeStatus(Long requestId, RequestStatus newStatus, String changedBy, String reason) {
+    @Transactional
+    public void changeStatus(Long requestId, RequestStatus newStatus, String changedBy, String reason) {
 
         ServiceRequest request = repository.findById(requestId)// - throws exception if request not found
                 .orElseThrow(() -> new IllegalArgumentException("Request not found: id=" + requestId));
 
-        request.setStatus(newStatus);
 
         StatusHistory history = StatusHistory.builder()
                 .request(request)
                 .timestamp(LocalDateTime.now())
                 .changedBy(changedBy)
                 .reason(reason)
+                .prevStatus(request.getStatus())
                 .newStatus(newStatus)
                 .build();
 
+        request.setStatus(newStatus);
         request.getHistory().add(history);
 
         // If status is set to COMPLETED, mock the sms by log
@@ -62,7 +65,7 @@ public class RequestService {
         log.info("Changing status to {} by {} with reason: {}", newStatus, changedBy, reason);
 
 
-        return repository.save(request);
+        repository.save(request);
     }
 
 

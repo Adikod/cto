@@ -31,22 +31,22 @@ public class RequestController {
     }
 
     // update request status
-    @PostMapping("/{id}/status")
-    public ResponseEntity<Void> changeStatusKafka(@PathVariable Long id, @RequestBody @Valid ChangeStatusDTO dto) {
-        requestService.sendStatusChangeKafka(id, dto.newStatus(), dto.changedBy(), dto.reason());
+    @PostMapping("/status")
+    public ResponseEntity<Void> changeStatusKafka(@RequestBody @Valid ChangeStatusDTO dto) {
+        requestService.sendStatusChangeKafka(dto.id(), dto.newStatus(), dto.changedBy(), dto.reason());
         return ResponseEntity.accepted().build();
     }
 
 
     // gets requests by client name
     @GetMapping("/by-client")
-    public List<ServiceRequest> byClient(@RequestParam String name) {
+    public List<ServiceRequest> byClient(@RequestParam("name") String name) {
         return requestService.getByClient(name);
     }
 
     // gets requests by status
     @GetMapping("/by-status")
-    public List<ServiceRequest> byStatus(@RequestParam RequestStatus status) {
+    public List<ServiceRequest> byStatus(@RequestParam("status") RequestStatus status) {
         return requestService.getByStatus(status);
     }
 }

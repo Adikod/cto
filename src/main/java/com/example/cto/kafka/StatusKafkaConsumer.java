@@ -14,7 +14,7 @@ public class StatusKafkaConsumer {
 
     private final RequestService requestService;
 
-    @KafkaListener(topics = "statusСhange", groupId = "сto-service")
+    @KafkaListener(topics = "statusChange", groupId = "cto-service")
     public void handleStatusChange(String message) {
         try {
             StatusChangeEvent event = new ObjectMapper().readValue(message, StatusChangeEvent.class);

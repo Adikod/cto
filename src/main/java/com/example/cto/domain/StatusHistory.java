@@ -1,5 +1,6 @@
 package com.example.cto.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class StatusHistory {
 
     @Id
@@ -36,4 +38,8 @@ public class StatusHistory {
     // What status was set
     @Enumerated(EnumType.STRING)
     private RequestStatus newStatus;
+
+    // What status was prev
+    @Enumerated(EnumType.STRING)
+    private RequestStatus prevStatus;
 }

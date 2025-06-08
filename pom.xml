@@ -7,7 +7,7 @@
     <groupId>com.example</groupId>
     <artifactId>cto-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>СТО Service</name>
+    <name>CTO Service</name>
     <description>Status change history service</description>
     <packaging>jar</packaging>
 
@@ -68,6 +68,19 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <configuration>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
